@@ -56,36 +56,36 @@ namespace NodeEditor.Scripts.Views
 			}
 			else if (evt.target is BlackboardField)
 			{
-				evt.menu.AppendAction("Delete", (e) => DeleteSelectionImplementation("Delete", AskUser.DontAskUser), (e) => canDeleteSelection ? ContextualMenu.MenuAction.StatusFlags.Normal : ContextualMenu.MenuAction.StatusFlags.Disabled);
+				evt.menu.AppendAction("Delete", (e) => DeleteSelectionImplementation("Delete", AskUser.DontAskUser), (e) => canDeleteSelection ? DropdownMenu.MenuAction.StatusFlags.Normal : DropdownMenu.MenuAction.StatusFlags.Disabled);
 			}
 		}
 
-		void SeeDocumentation(ContextualMenu.MenuAction action)
+		void SeeDocumentation(DropdownMenu.MenuAction action)
 		{
 			var node = selection.OfType<NodeView>().First().node;
 			if (node.documentationURL != null)
 				System.Diagnostics.Process.Start(node.documentationURL);
 		}
 
-		ContextualMenu.MenuAction.StatusFlags SeeDocumentationStatus(ContextualMenu.MenuAction action)
+		DropdownMenu.MenuAction.StatusFlags SeeDocumentationStatus(DropdownMenu.MenuAction action)
 		{
 			if (selection.OfType<NodeView>().First().node.documentationURL == null)
-				return ContextualMenu.MenuAction.StatusFlags.Disabled;
-			return ContextualMenu.MenuAction.StatusFlags.Normal;
+				return DropdownMenu.MenuAction.StatusFlags.Disabled;
+			return DropdownMenu.MenuAction.StatusFlags.Normal;
 		}
 
-		ContextualMenu.MenuAction.StatusFlags ConvertToPropertyStatus(ContextualMenu.MenuAction action)
+		DropdownMenu.MenuAction.StatusFlags ConvertToPropertyStatus(DropdownMenu.MenuAction action)
 		{
 			if (selection.OfType<NodeView>().Any(v => v.node != null))
 			{
 				if (selection.OfType<NodeView>().Any(v => v.node is IPropertyFromNode))
-					return ContextualMenu.MenuAction.StatusFlags.Normal;
-				return ContextualMenu.MenuAction.StatusFlags.Disabled;
+					return DropdownMenu.MenuAction.StatusFlags.Normal;
+				return DropdownMenu.MenuAction.StatusFlags.Disabled;
 			}
-			return ContextualMenu.MenuAction.StatusFlags.Hidden;
+			return DropdownMenu.MenuAction.StatusFlags.Hidden;
 		}
 
-		void ConvertToProperty(ContextualMenu.MenuAction action)
+		void ConvertToProperty(DropdownMenu.MenuAction action)
 		{
 			var selectedNodeViews = selection.OfType<NodeView>().Select(x => x.node).ToList();
 			foreach (var node in selectedNodeViews)
